@@ -1,0 +1,199 @@
+body {
+    background-color: gainsboro;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+}
+
+.lbl-input {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+}
+
+.download {
+    align-self: flex-end;
+    width: 200px;
+}
+
+.attributes-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.attributes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    margin: 20px;
+}
+
+.row {
+    display: flex;
+}
+
+.figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 10px 0 10px;
+}
+
+.middle {
+    display: flex;
+    flex-direction: row;
+}
+
+.bottom {
+    display: flex;
+    flex-direction: row;
+}
+
+.head {
+    display: flex;
+    justify-content: center;
+    border: solid black 2px;
+    margin-bottom: 5px;
+    border-radius: 50%;
+    background-color: blanchedalmond;
+    height: 50px;
+    width: 50px;
+}
+
+.torso {
+    display: flex;
+    align-items: center;
+    flex-direction: column-reverse;
+    border: solid black 2px;
+    height: 120px;
+    width: 75px;
+    background-color: blanchedalmond;
+}
+
+.spirit {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 50%;
+    border-top: solid black 1px;
+}
+
+.heart {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 50%;
+    border-bottom: solid black 1px;
+}
+
+#heart {
+    align-self: center;
+    margin-top: 10px;
+    width: 20px;
+    height: 25px;
+}
+
+#spirit {
+    align-self: center;
+    margin-top: 10px;
+    width: 20px;
+    height: 25px;
+}
+
+.arm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    border: solid black 2px;
+    background-color: blanchedalmond;
+    width: 25px;
+}
+
+.leg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    border: solid black 2px;
+    width: 25px;
+    height: 100px;
+    background-color: blanchedalmond;
+}
+
+.left-figure-inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+.right-figure-inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-block {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.main-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    border-right: solid black 2px;
+    padding-right: 20px;
+}
+
+.secondary-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-left: 20px;
+}
+
+.increase-input {
+    display: flex;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+}
+
+.input-label {
+    display: flex;
+    align-self: center;
+}
+
+.top-spacer-small {
+    margin-top: 5px;
+}
+
+.top-spacer {
+    margin-top: 30px;
+}
+
+.bot-spacer {
+    margin-bottom: 5px;
+}
+
+.top-spacer-larger {
+    margin-top: 80px;
+}
+
+.bottom-line {
+    border-bottom: solid black 2px;
+}
+
+button {
+    width: 100%;
+}

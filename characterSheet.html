@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<html lang="en">
+
+<header>
+    <link rel="stylesheet" href="css.css">
+    <script id="character-path" type="text/javascript" src="statSheet.js"></script>
+    <script src="js.js"></script>
+    <h1>Faltered Will</h1>
+    <button class="download" onclick="downloadCharacter()">Download Character</button>
+</header>
+
+<body onLoad="initPage()">
+
+    <div class="infos">
+        <h2>Stats</h2>
+        <div class="lbl-input">
+            <label key="name" for="input-name"> Name : </label>
+            <input key="name" id="input-name" type="text" onblur="saveName(this.value)" />
+        </div>
+    </div>
+
+    <div class="attributes-wrapper">
+
+        <div class="attributes">
+
+            <div class="increase-input , bot-spacer">
+                <button id="btn-decrease-head-value" title="decrease Head " onclick="decreaseInput( 'head-value') "> - </button>
+                <button id="btn-increase-head-value" title="Increase Head " onclick="increaseInput( 'head-value') "> + </button>
+            </div>
+
+            <div class="row">
+                <div class="left-figure-inputs">
+                    <div class="increase-input">
+                        <button id="btn-decrease-spirit-value" title="decrease spirit" onclick="decreaseInput( 'spirit-value') "> - </button>
+                        <button id="btn-increase-spirit-value" title="Increase spirit" onclick="increaseInput( 'spirit-value') "> + </button>
+                    </div>
+                    <div class="increase-input , top-spacer">
+                        <button id="btn-decrease-larm-value" title="decrease L.Arm" onclick="decreaseInput( 'larm-value') "> - </button>
+                        <button id="btn-increase-larm-value" title="Increase L.Arm" onclick="increaseInput( 'larm-value') "> + </button>
+                    </div>
+                    <div class="increase-input , top-spacer-larger">
+                        <button id="btn-decrease-lleg-value" title="decrease L.Leg" onclick="decreaseInput( 'lleg-value') "> - </button>
+                        <button id="btn-increase-lleg-value" title="Increase L.Leg" onclick="increaseInput( 'lleg-value') "> + </button>
+                    </div>
+                </div>
+
+                <div class="figure">
+                    <div class="head" title="Head">
+                        <label class="input-label" id="head-value"> 0 </label>
+                    </div>
+                    <div class="middle">
+                        <div class="arm" title="L.Arm">
+                            <label class="input-label" id="larm-value"> 0 </label>
+                        </div>
+
+                        <div class="torso">
+                            <div class="spirit" title="Spirit">
+                                <img id="spirit" src="https://www.freeiconspng.com/thumbs/tear-png/tear-png-24.png" />
+                                <label class="input-label" id="spirit-value"> 0 </label>
+                            </div>
+
+                            <div class="heart" title="Heart">
+                                <img id="heart" src="https://www.freeiconspng.com/thumbs/heart-png/heart-png-15.png" />
+                                <label class="input-label" id="heart-value"> 0 </label>
+                            </div>
+                        </div>
+
+                        <div class="arm" title="R.Arm">
+                            <label class="input-label" id="rarm-value"> 0 </label>
+                        </div>
+                    </div>
+                    <div class="bottom">
+                        <div class="leg" title="L.Leg">
+                            <label class="input-label" id="lleg-value"> 0 </label>
+                        </div>
+                        <div class="leg" title="R.Leg">
+                            <label class="input-label" id="rleg-value"> 0 </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-figure-inputs">
+                    <div class="increase-input">
+                        <button id="btn-decrease-heart-value" title="decrease heart" onclick="decreaseInput( 'heart-value') "> - </button>
+                        <button id="btn-increase-heart-value" title="Increase heart" onclick="increaseInput( 'heart-value') "> + </button>
+                    </div>
+                    <div class="increase-input , top-spacer">
+                        <button id="btn-decrease-rarm-value" title="decrease R.Arm" onclick="decreaseInput( 'rarm-value') "> - </button>
+                        <button id="btn-increase-rarm-value" title="Increase R.Arm" onclick="increaseInput( 'rarm-value') "> + </button>
+                    </div>
+                    <div class="increase-input , top-spacer-larger">
+                        <button id="btn-decrease-rleg-value" title="decrease R.Leg" onclick="decreaseInput( 'rleg-value') "> - </button>
+                        <button id="btn-increase-rleg-value" title="Increase R.Leg" onclick="increaseInput( 'rleg-value') "> + </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-block">
+
+            <div class="main-stats">
+                <div class="lbl-stat , top-spacer-small">
+                    <label key="mind" for="mind"> Mind : </label>
+                    <label key="mind" id="lbl-mind"> 0 </label>
+                </div>
+
+                <div class="lbl-stat , top-spacer-small">
+                    <label key="strength" for="strength"> Strength : </label>
+                    <label key="strength" id="lbl-strength"> 0 </label>
+                </div>
+
+                <div class="lbl-stat , top-spacer-small">
+                    <label key="agility" for="agility"> Agility : </label>
+                    <label key="agility" id="lbl-agility"> 0 </label>
+                </div>
+
+                <div class="lbl-stat , top-spacer-small">
+                    <label key="will" for="will"> Will : </label>
+                    <label key="will" id="lbl-will" title=> 0 </label>
+                </div>
+            </div>
+
+            <div class="secondary-stats">
+                <div class="lbl-stat">
+                    <label key="endurance" for="endurancee"> Endurance : </label>
+                    <label key="endurance" id="lbl-endurance"> 0 </label>
+                </div>
+
+                <div class="lbl-stat">
+                    <label key="endurance" for="endurancee"> Ac : </label>
+                    <label key="endurance" id="lbl-endurance"> 0 </label>
+                </div>
+
+                <div class="lbl-stat">
+                    <label key="endurance" for="endurancee"> Pac : </label>
+                    <label key="endurance" id="lbl-endurance"> 0 </label>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</body>
+
+</html>
