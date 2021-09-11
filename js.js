@@ -3,13 +3,22 @@
 //////////////////////////////////////
 const CHARACTER_SHEET_ID = "character-path";
 const INPUT_NAME = "input-name";
-const LABEL_ENDURANCE = "lbl-endurance";
 const LABEL_MIND = "lbl-mind";
 const LABEL_STRENGTH = "lbl-strength";
 const LABEL_AGILITY = "lbl-agility";
 const LABEL_WILL = "lbl-will";
+const LABEL_ENDURANCE = "lbl-endurance";
 const LABEL_AC = "lbl-ac";
 const LABEL_PAC = "lbl-pac";
+const TITLE_MIND = "title-mind";
+const TITLE_STRENGTH = "title-strength";
+const TITLE_AGILITY = "title-agility";
+const TITLE_WILL = "title-will";
+const TITLE_ENDURANCE = "title-endurance";
+const TITLE_AC = "title-ac";
+const TITLE_PAC = "title-pac";
+const TEXT_ABILITY = "txt-ability";
+const TEXT_NOTES = "txt-notes";
 const BTN_DECREASE = "btn-decrease-";
 const HEAD_VALUE = "head-value";
 const RIGHT_ARM_VALUE = "rarm-value";
@@ -26,20 +35,22 @@ const LEFT_LEG_VALUE = "lleg-value";
 //With every new character attributes, you must add it here so it doesn't crash when sending updates
 const initCharacterBaseStat = {
     "name": "",
-    "headValue": 0,
-    "spiritValue": 0,
-    "heartValue": 0,
-    "rightArmValue": 0,
-    "leftArmValue": 0,
-    "rightLegValue": 0,
-    "leftLegValue": 0,
+    "headValue": 1,
+    "spiritValue": 1,
+    "heartValue": 1,
+    "rightArmValue": 1,
+    "leftArmValue": 1,
+    "rightLegValue": 1,
+    "leftLegValue": 1,
     "enduranceValue": 0,
-    "Ac": 0,
-    "Pac": 0,
+    "acValue": 0,
+    "pacValue": 0,
     "mindValue": 0,
     "strengthValue": 0,
     "agilityValue": 0,
     "willValue": 0,
+    "abilityDescription": "",
+    "notes": "",
 }
 
 let character = initCharacterBaseStat;
@@ -62,12 +73,12 @@ function getItemById(id) {
 //////////////////////////////////////
 
 function loadCharacter() {
-    //Object.assign(initCharacterBaseStat, initCharacter)
     loadInfo();
     loadAttributes();
-    calculateStats()
+    calculateStats();
     loadStats();
     loadTitles();
+    loadTexts();
 }
 
 function loadInfo() {
@@ -83,6 +94,14 @@ function loadStats() {
 
 function saveName(name) {
     character.name = name;
+}
+
+function saveAbility(value) {
+    character.abilityDescription = value;
+}
+
+function saveNotes(value) {
+    character.notes = value;
 }
 
 function loadAttributes() {
@@ -101,6 +120,8 @@ function loadAttributes() {
     getItemById(LEFT_LEG_VALUE).innerHTML = character.leftLegValue;
     checkIfBtnDisable(LEFT_LEG_VALUE);
     getItemById(LABEL_ENDURANCE).innerHTML = Math.ceil(character.enduranceValue);
+    getItemById(LABEL_AC).innerHTML = character.acValue;
+    getItemById(LABEL_PAC).innerHTML = character.pacValue;
 }
 
 function calculateStats() {
@@ -128,6 +149,14 @@ function calculateStats() {
 
     character.enduranceValue = Math.floor(enduranceValue);
     getItemById(LABEL_ENDURANCE).innerHTML = Math.floor(enduranceValue);
+
+    //Ac Is agility value + heart value + body part value
+    character.acValue = character.agilityValue + character.heartValue;
+    getItemById(LABEL_AC).innerHTML = character.acValue;
+
+    //Pac is agility value + spirit + body part value
+    character.pacValue = character.agilityValue + character.spiritValue;
+    getItemById(LABEL_PAC).innerHTML = character.pacValue;
 }
 
 //////////////////////////////////////
@@ -178,10 +207,24 @@ function downloadCharacter() {
 }
 
 function loadTitles() {
-    getItemById(LABEL_MIND).title = "Head: (" + character.headValue + ")";
-    getItemById(LABEL_STRENGTH).title = "R.Arm: (" + character.rightArmValue + ") + L.Arm; (" + character.leftArmValue + ")";
-    getItemById(LABEL_AGILITY).title = "R.Leg: (" + character.rightLegValue + ") + L.Leg; (" + character.leftLegValue + ")";
-    getItemById(LABEL_WILL).title = "Spirit: (" + character.spiritValue + ") + Heart: (" + character.heartValue + ")";
+    getItemById(TITLE_MIND).title = "Head: (" + character.headValue + ")";
+    getItemById(TITLE_STRENGTH).title = "R.Arm: (" + character.rightArmValue + ") + L.Arm; (" + character.leftArmValue + ")";
+    getItemById(TITLE_AGILITY).title = "R.Leg: (" + character.rightLegValue + ") + L.Leg; (" + character.leftLegValue + ")";
+    getItemById(TITLE_WILL).title = "Spirit: (" + character.spiritValue + ") + Heart: (" + character.heartValue + ")";
+    getItemById(TITLE_AC).title = "Agility: (" + character.agilityValue + ") + Heart: (" + character.heartValue + ") + Targeted Limb: ()";
+    getItemById(TITLE_PAC).title = "Agility: (" + character.agilityValue + ") + Spirit: (" + character.spiritValue + ") + Targeted Limb: ()";
 
-    getItemById(LABEL_ENDURANCE).title = "Spirit: (" + character.spiritValue + ") + Heart: (" + character.heartValue + ") + ( Mind: (" + character.mindValue + "*) + Strength: (" + character.strengthValue + ") + Agility: (" + character.agilityValue + ") ) /2 *Mind is rounded up";
+    getItemById(TITLE_ENDURANCE).title = "Spirit: (" + character.spiritValue + ") + Heart: (" + character.heartValue + ") + ( Mind: (" + character.mindValue + "*) + Strength: (" + character.strengthValue + ") + Agility: (" + character.agilityValue + ") ) /2 *Mind is rounded up";
 }
+
+function loadTexts() {
+    getItemById(TEXT_ABILITY).value = character.abilityDescription;
+    getItemById(TEXT_NOTES).value = character.notes;
+}
+
+/*
+process 2. Ac Is agility value + heart value + body part value
+process 3. Pac is agility value + spirit + body part value
+process 4. Need a functioning Notes section. Not pretty just typeable
+
+*/

@@ -20,6 +20,12 @@ h1 {
     width: 200px;
 }
 
+.lbl-stat {
+    display: flex;
+    justify-content: flex-end;
+    min-width: 100px;
+}
+
 .download {
     align-self: flex-end;
     width: 200px;
@@ -144,7 +150,7 @@ h1 {
 .stat-block {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .main-stats {
@@ -160,6 +166,7 @@ h1 {
     flex-direction: column;
     align-items: flex-end;
     padding-left: 20px;
+    margin-right: 20px;
 }
 
 .increase-input {
@@ -172,6 +179,16 @@ h1 {
 .input-label {
     display: flex;
     align-self: center;
+}
+
+.text-area {
+    display: flex;
+    flex-direction: column;
+}
+
+.ability-wrapper {
+    display: flex;
+    flex-direction: column;
 }
 
 .top-spacer-small {
@@ -192,6 +209,17 @@ h1 {
 
 .bottom-line {
     border-bottom: solid black 2px;
+}
+
+.text-area {
+    width: 100%;
+    height: 200px;
+    margin-right: 20px;
+}
+
+text-area {
+    width: 500px;
+    height: 100%;
 }
 
 button {
