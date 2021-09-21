@@ -3,6 +3,7 @@
 //////////////////////////////////////
 const CHARACTER_SHEET_ID = "character-path";
 const INPUT_NAME = "input-name";
+const LIMB_STAT = "limb-stats";
 const LABEL_MIND = "lbl-mind";
 const LABEL_STRENGTH = "lbl-strength";
 const LABEL_AGILITY = "lbl-agility";
@@ -10,6 +11,7 @@ const LABEL_WILL = "lbl-will";
 const LABEL_ENDURANCE = "lbl-endurance";
 const LABEL_AC = "lbl-ac";
 const LABEL_PAC = "lbl-pac";
+const LABEL_TMP_HP = "lbl-tmp-hp";
 const TITLE_MIND = "title-mind";
 const TITLE_STRENGTH = "title-strength";
 const TITLE_AGILITY = "title-agility";
@@ -36,12 +38,19 @@ const LEFT_LEG_VALUE = "lleg-value";
 const initCharacterBaseStat = {
     "name": "",
     "headValue": 1,
+    "tmpHeadValue": 0,
     "spiritValue": 1,
+    "tmpSpiritValue": 0,
     "heartValue": 1,
+    "tmpHeartValue": 0,
     "rightArmValue": 1,
+    "tmpRightArmValue": 0,
     "leftArmValue": 1,
+    "tmpLeftArmValue": 0,
     "rightLegValue": 1,
+    "tmpRightLegValue": 0,
     "leftLegValue": 1,
+    "tmpLeftLegValue": 0,
     "enduranceValue": 0,
     "acValue": 0,
     "pacValue": 0,
@@ -51,9 +60,12 @@ const initCharacterBaseStat = {
     "willValue": 0,
     "abilityDescription": "",
     "notes": "",
+    "skinTone": "#FFEBCD"
 }
 
 let character = initCharacterBaseStat;
+let clickedLimbId = null;
+let selectedLimbValue = 0;
 character = Object.assign(initCharacterBaseStat, initCharacter);
 
 //////////////////////////////////////
@@ -66,6 +78,28 @@ function initPage() {
 
 function getItemById(id) {
     return document.getElementById(id);
+}
+
+function clickLimb(limbId) {
+    if (clickedLimbId === limbId) {
+        clickedLimbId = null;
+        getItemById(limbId).style.backgroundColor = character.skinTone;
+        selectedLimbValue = 0;
+        calculateStats();
+        getItemById(LIMB_STAT).style.visibility = "hidden";
+        return
+    }
+
+    if (clickedLimbId != null) {
+        getItemById(clickedLimbId).style.backgroundColor = character.skinTone;
+    }
+
+    clickedLimbId = limbId;
+    selectedLimbValue = Number.parseInt(getItemById(limbId + "-value").innerHTML);
+    getItemById(LABEL_TMP_HP).innerHTML = getCharacterTmpLimbValue(clickedLimbId);
+    getItemById(limbId).style.backgroundColor = "#AACCAA";
+    getItemById(LIMB_STAT).style.visibility = "visible";
+    calculateStats();
 }
 
 //////////////////////////////////////
@@ -151,11 +185,11 @@ function calculateStats() {
     getItemById(LABEL_ENDURANCE).innerHTML = Math.floor(enduranceValue);
 
     //Ac Is agility value + heart value + body part value
-    character.acValue = character.agilityValue + character.heartValue;
+    character.acValue = character.agilityValue + character.heartValue + selectedLimbValue;
     getItemById(LABEL_AC).innerHTML = character.acValue;
 
     //Pac is agility value + spirit + body part value
-    character.pacValue = character.agilityValue + character.spiritValue;
+    character.pacValue = character.agilityValue + character.spiritValue + selectedLimbValue;
     getItemById(LABEL_PAC).innerHTML = character.pacValue;
 }
 
@@ -187,6 +221,58 @@ function decreaseInput(label) {
     checkIfBtnDisable(label);
     calculateStats();
     loadStats();
+}
+
+function increaseLimbHp() {
+    let lblValue = getCharacterTmpLimbValue(clickedLimbId);
+    getItemById(LABEL_TMP_HP).innerHTML = lblValue += 1;
+    console.log(lblValue)
+    setCharacterTmpLimb(clickedLimbId, lblValue);
+}
+
+function decreaseLimbHp() {
+    let lblValue = getCharacterTmpLimbValue(clickedLimbId);
+    getItemById(LABEL_TMP_HP).innerHTML = lblValue -= 1;
+    console.log(lblValue)
+    setCharacterTmpLimb(clickedLimbId, lblValue);
+}
+
+function getCharacterTmpLimbValue(limb) {
+    switch (limb) {
+        case "head":
+            return character.tmpHeadValue;
+        case "heart":
+            return character.tmpHeartValue;
+        case "spirit":
+            return character.tmpSpiritValue;
+        case "larm":
+            return character.tmpLeftArmValue;
+        case "rarm":
+            return character.tmpRightArmValue;
+        case "lleg":
+            return character.tmpLeftLegValue;
+        case "rleg":
+            return character.tmpRightLegValue;
+    }
+}
+
+function setCharacterTmpLimb(limb, value) {
+    switch (limb) {
+        case "head":
+            return character.tmpHeadValue = value;
+        case "heart":
+            return character.tmpHeartValue = value;
+        case "spirit":
+            return character.tmpSpiritValue = value;
+        case "larm":
+            return character.tmpLeftArmValue = value;
+        case "rarm":
+            return character.tmpRightArmValue = value;
+        case "lleg":
+            return character.tmpLeftLegValue = value;
+        case "rleg":
+            return character.tmpRightLegValue = value;
+    }
 }
 
 function download(filename, text) {
@@ -221,10 +307,3 @@ function loadTexts() {
     getItemById(TEXT_ABILITY).value = character.abilityDescription;
     getItemById(TEXT_NOTES).value = character.notes;
 }
-
-/*
-process 2. Ac Is agility value + heart value + body part value
-process 3. Pac is agility value + spirit + body part value
-process 4. Need a functioning Notes section. Not pretty just typeable
-
-*/
