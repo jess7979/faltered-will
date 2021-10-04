@@ -14,9 +14,20 @@
 
     <div class="infos">
         <h2>Stats</h2>
-        <div class="lbl-input">
-            <label key="name" for="input-name"> Name : </label>
-            <input key="name" id="input-name" type="text" onblur="saveName(this.value)" />
+        <div class="direction-row">
+            <div class="lbl-input ">
+                <label key="name" for="input-name"> Name : </label>
+                <input key="name" id="input-name" type="text" onblur="saveName(this.value)" />
+            </div>
+            <div class="lbl-drop-list">
+                <label key="size" for="input-size"> Size : </label>
+                <select key="size" id="input-size" type="text" onchange="saveSize(this.value)">
+                    <option id="size-medium" value="size-medium" title="1x1 (1)">Medium</option>
+                    <option id="size-large" value="size-large" title="2x2 (4)">Large</option>
+                    <option id="size-huge" value="size-huge" title="3x3 (9)">Huge</option>
+                    <option id="size-gargantuan" value="size-gargantuan" title="4x4 (16)">Gargantuan</option>
+                </select>
+            </div>
         </div>
     </div>
 

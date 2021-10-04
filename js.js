@@ -1,8 +1,15 @@
 //////////////////////////////////////
 // CONSTANTS
 //////////////////////////////////////
+const INPUT = "input";
+const BUTTON = "button";
+const TEXT_AREA = "textarea";
+const SELECT = "select";
+const OPTION = "option";
+
 const CHARACTER_SHEET_ID = "character-path";
 const INPUT_NAME = "input-name";
+const INPUT_SIZE = "input-size";
 const LIMB_STAT = "limb-stats";
 const LABEL_MIND = "lbl-mind";
 const LABEL_STRENGTH = "lbl-strength";
@@ -37,6 +44,7 @@ const LEFT_LEG_VALUE = "lleg-value";
 //With every new character attributes, you must add it here so it doesn't crash when sending updates
 const initCharacterBaseStat = {
     "name": "",
+    "size": "size-medium",
     "headValue": 1,
     "tmpHeadValue": 0,
     "spiritValue": 1,
@@ -64,9 +72,9 @@ const initCharacterBaseStat = {
 }
 
 let character = initCharacterBaseStat;
+character = Object.assign(initCharacterBaseStat, initCharacter);
 let clickedLimbId = null;
 let selectedLimbValue = 0;
-character = Object.assign(initCharacterBaseStat, initCharacter);
 
 //////////////////////////////////////
 // GENERAL FUNCTIONS
@@ -78,6 +86,26 @@ function initPage() {
 
 function getItemById(id) {
     return document.getElementById(id);
+}
+
+function getInputById(id) {
+    return document.getElementsByTagName(INPUT).namedItem(id);
+}
+
+function getSelectById(id) {
+    return document.getElementsByTagName(SELECT).namedItem(id);
+}
+
+function getOptionById(id) {
+    return document.getElementsByTagName(OPTION).namedItem(id);
+}
+
+function getButtonById(id) {
+    return document.getElementsByTagName(BUTTON).namedItem(id);
+}
+
+function getTextAreaById(id) {
+    return document.getElementsByTagName(TEXT_AREA).namedItem(id);
 }
 
 function clickLimb(limbId) {
@@ -96,7 +124,7 @@ function clickLimb(limbId) {
 
     clickedLimbId = limbId;
     selectedLimbValue = Number.parseInt(getItemById(limbId + "-value").innerHTML);
-    getItemById(LABEL_TMP_HP).innerHTML = getCharacterTmpLimbValue(clickedLimbId);
+    getItemById(LABEL_TMP_HP).innerHTML = getCharacterTmpLimbValue(clickedLimbId).toString();
     getItemById(limbId).style.backgroundColor = "#AACCAA";
     getItemById(LIMB_STAT).style.visibility = "visible";
     calculateStats();
@@ -116,18 +144,23 @@ function loadCharacter() {
 }
 
 function loadInfo() {
-    getItemById(INPUT_NAME).value = character.name;
+    getInputById(INPUT_NAME).value = character.name;
+    getOptionById(character.size).selected = true;
 }
 
 function loadStats() {
-    getItemById(LABEL_MIND).innerHTML = character.mindValue;
-    getItemById(LABEL_STRENGTH).innerHTML = character.strengthValue;
-    getItemById(LABEL_AGILITY).innerHTML = character.agilityValue;
-    getItemById(LABEL_WILL).innerHTML = character.willValue;
+    getItemById(LABEL_MIND).innerHTML = character.mindValue.toString();
+    getItemById(LABEL_STRENGTH).innerHTML = character.strengthValue.toString();
+    getItemById(LABEL_AGILITY).innerHTML = character.agilityValue.toString();
+    getItemById(LABEL_WILL).innerHTML = character.willValue.toString();
 }
 
 function saveName(name) {
     character.name = name;
+}
+
+function saveSize(size) {
+    character.size = size
 }
 
 function saveAbility(value) {
@@ -139,23 +172,23 @@ function saveNotes(value) {
 }
 
 function loadAttributes() {
-    getItemById(HEAD_VALUE).innerHTML = character.headValue;
+    getItemById(HEAD_VALUE).innerHTML = character.headValue.toString();
     checkIfBtnDisable(HEAD_VALUE);
-    getItemById(SPIRIT_VALUE).innerHTML = character.spiritValue;
+    getItemById(SPIRIT_VALUE).innerHTML = character.spiritValue.toString();
     checkIfBtnDisable(SPIRIT_VALUE);
-    getItemById(HEART_VALUE).innerHTML = character.heartValue;
+    getItemById(HEART_VALUE).innerHTML = character.heartValue.toString();
     checkIfBtnDisable(HEART_VALUE);
-    getItemById(RIGHT_ARM_VALUE).innerHTML = character.rightArmValue;
+    getItemById(RIGHT_ARM_VALUE).innerHTML = character.rightArmValue.toString();
     checkIfBtnDisable(RIGHT_ARM_VALUE);
-    getItemById(LEFT_ARM_VALUE).innerHTML = character.leftArmValue;
+    getItemById(LEFT_ARM_VALUE).innerHTML = character.leftArmValue.toString();
     checkIfBtnDisable(LEFT_ARM_VALUE);
-    getItemById(RIGHT_LEG_VALUE).innerHTML = character.rightLegValue;
+    getItemById(RIGHT_LEG_VALUE).innerHTML = character.rightLegValue.toString();
     checkIfBtnDisable(RIGHT_LEG_VALUE);
-    getItemById(LEFT_LEG_VALUE).innerHTML = character.leftLegValue;
+    getItemById(LEFT_LEG_VALUE).innerHTML = character.leftLegValue.toString();
     checkIfBtnDisable(LEFT_LEG_VALUE);
-    getItemById(LABEL_ENDURANCE).innerHTML = Math.ceil(character.enduranceValue);
-    getItemById(LABEL_AC).innerHTML = character.acValue;
-    getItemById(LABEL_PAC).innerHTML = character.pacValue;
+    getItemById(LABEL_ENDURANCE).innerHTML = Math.ceil(character.enduranceValue).toString();
+    getItemById(LABEL_AC).innerHTML = character.acValue.toString();
+    getItemById(LABEL_PAC).innerHTML = character.pacValue.toString();
 }
 
 function calculateStats() {
@@ -182,15 +215,15 @@ function calculateStats() {
     character.agilityValue = character.rightLegValue + character.leftLegValue;
 
     character.enduranceValue = Math.floor(enduranceValue);
-    getItemById(LABEL_ENDURANCE).innerHTML = Math.floor(enduranceValue);
+    getItemById(LABEL_ENDURANCE).innerHTML = Math.floor(enduranceValue).toString();
 
     //Ac Is agility value + heart value + body part value
     character.acValue = character.agilityValue + character.heartValue + selectedLimbValue;
-    getItemById(LABEL_AC).innerHTML = character.acValue;
+    getItemById(LABEL_AC).innerHTML = character.acValue.toString();
 
     //Pac is agility value + spirit + body part value
     character.pacValue = character.agilityValue + character.spiritValue + selectedLimbValue;
-    getItemById(LABEL_PAC).innerHTML = character.pacValue;
+    getItemById(LABEL_PAC).innerHTML = character.pacValue.toString();
 }
 
 //////////////////////////////////////
@@ -201,15 +234,15 @@ function checkIfBtnDisable(id) {
     let lblValue = parseInt(getItemById(id).innerHTML);
 
     if (lblValue <= 0) {
-        getItemById(BTN_DECREASE + id).disabled = true;
+        getButtonById(BTN_DECREASE + id).disabled = true;
         return;
     }
-    getItemById(BTN_DECREASE + id).disabled = false;
+    getButtonById(BTN_DECREASE + id).disabled = false;
 }
 
 function increaseInput(label) {
     let lblValue = parseInt(getItemById(label).innerHTML);
-    getItemById(label).innerHTML = lblValue + 1;
+    getItemById(label).innerHTML = (lblValue + 1).toString();
     checkIfBtnDisable(label);
     calculateStats();
     loadStats();
@@ -217,7 +250,7 @@ function increaseInput(label) {
 
 function decreaseInput(label) {
     let lblValue = parseInt(getItemById(label).innerHTML);
-    getItemById(label).innerHTML = lblValue - 1;
+    getItemById(label).innerHTML = (lblValue - 1).toString();
     checkIfBtnDisable(label);
     calculateStats();
     loadStats();
@@ -225,14 +258,14 @@ function decreaseInput(label) {
 
 function increaseLimbHp() {
     let lblValue = getCharacterTmpLimbValue(clickedLimbId);
-    getItemById(LABEL_TMP_HP).innerHTML = lblValue += 1;
+    getItemById(LABEL_TMP_HP).innerHTML = (lblValue += 1).toString();
     console.log(lblValue)
     setCharacterTmpLimb(clickedLimbId, lblValue);
 }
 
 function decreaseLimbHp() {
     let lblValue = getCharacterTmpLimbValue(clickedLimbId);
-    getItemById(LABEL_TMP_HP).innerHTML = lblValue -= 1;
+    getItemById(LABEL_TMP_HP).innerHTML = (lblValue -= 1).toString();
     console.log(lblValue)
     setCharacterTmpLimb(clickedLimbId, lblValue);
 }
@@ -304,6 +337,6 @@ function loadTitles() {
 }
 
 function loadTexts() {
-    getItemById(TEXT_ABILITY).value = character.abilityDescription;
-    getItemById(TEXT_NOTES).value = character.notes;
+    getTextAreaById(TEXT_ABILITY).value = character.abilityDescription;
+    getTextAreaById(TEXT_NOTES).value = character.notes;
 }

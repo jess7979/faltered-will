@@ -9,15 +9,37 @@ header {
     flex-direction: column;
 }
 
+.direction-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.direction-col {
+    display: flex;
+    flex-direction: row;
+}
+
 h1 {
     display: flex;
     justify-content: center;
+}
+
+.infos {
+    display: flex;
+    flex-direction: column;
 }
 
 .lbl-input {
     display: flex;
     flex-direction: column;
     width: 200px;
+}
+
+.lbl-drop-list {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+    margin-left: 5px;
 }
 
 .lbl-stat {
