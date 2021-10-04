@@ -114,6 +114,7 @@ function clickLimb(limbId) {
         getItemById(limbId).style.backgroundColor = character.skinTone;
         selectedLimbValue = 0;
         calculateStats();
+        loadTitles();
         getItemById(LIMB_STAT).style.visibility = "hidden";
         return
     }
@@ -128,6 +129,7 @@ function clickLimb(limbId) {
     getItemById(limbId).style.backgroundColor = "#AACCAA";
     getItemById(LIMB_STAT).style.visibility = "visible";
     calculateStats();
+    loadTitles();
 }
 
 //////////////////////////////////////
@@ -289,6 +291,8 @@ function getCharacterTmpLimbValue(limb) {
             return character.tmpLeftLegValue;
         case "rleg":
             return character.tmpRightLegValue;
+        default:
+            return 0;
     }
 }
 
@@ -308,6 +312,8 @@ function setCharacterTmpLimbValue(limb, value) {
             return character.tmpLeftLegValue = value;
         case "rleg":
             return character.tmpRightLegValue = value;
+        default:
+            return 0;
     }
 }
 
@@ -333,8 +339,9 @@ function loadTitles() {
     getItemById(TITLE_STRENGTH).title = "R.Arm: (" + character.rightArmValue + ") + L.Arm; (" + character.leftArmValue + ")";
     getItemById(TITLE_AGILITY).title = "R.Leg: (" + character.rightLegValue + ") + L.Leg; (" + character.leftLegValue + ")";
     getItemById(TITLE_WILL).title = "Spirit: (" + character.spiritValue + ") + Heart: (" + character.heartValue + ")";
-    getItemById(TITLE_AC).title = "Agility: (" + character.agilityValue + ") + Heart: (" + character.heartValue + ") + Targeted Limb: ()";
-    getItemById(TITLE_PAC).title = "Agility: (" + character.agilityValue + ") + Spirit: (" + character.spiritValue + ") + Targeted Limb: ()";
+
+    getItemById(TITLE_AC).title = "Agility: (" + character.agilityValue + ") + Heart: (" + character.heartValue + ") + Targeted Limb: (" + selectedLimbValue + ")";
+    getItemById(TITLE_PAC).title = "Agility: (" + character.agilityValue + ") + Spirit: (" + character.spiritValue + ") + Targeted Limb: (" + selectedLimbValue + ")";
 
     getItemById(TITLE_ENDURANCE).title = "Spirit: (" + character.spiritValue + ") + Heart: (" + character.heartValue + ") + ( Mind: (" + character.mindValue + "*) + Strength: (" + character.strengthValue + ") + Agility: (" + character.agilityValue + ") ) /2 *Mind is rounded up";
 }
