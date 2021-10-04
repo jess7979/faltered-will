@@ -134,6 +134,22 @@ function clickLimb(limbId) {
 // CHARACTER SPECIFIC
 //////////////////////////////////////
 
+function saveName(name) {
+    character.name = name;
+}
+
+function saveSize(size) {
+    character.size = size;
+}
+
+function saveAbility(value) {
+    character.abilityDescription = value;
+}
+
+function saveNotes(value) {
+    character.notes = value;
+}
+
 function loadCharacter() {
     loadInfo();
     loadAttributes();
@@ -155,20 +171,9 @@ function loadStats() {
     getItemById(LABEL_WILL).innerHTML = character.willValue.toString();
 }
 
-function saveName(name) {
-    character.name = name;
-}
-
-function saveSize(size) {
-    character.size = size
-}
-
-function saveAbility(value) {
-    character.abilityDescription = value;
-}
-
-function saveNotes(value) {
-    character.notes = value;
+function loadTexts() {
+    getTextAreaById(TEXT_ABILITY).value = character.abilityDescription;
+    getTextAreaById(TEXT_NOTES).value = character.notes;
 }
 
 function loadAttributes() {
@@ -259,15 +264,13 @@ function decreaseInput(label) {
 function increaseLimbHp() {
     let lblValue = getCharacterTmpLimbValue(clickedLimbId);
     getItemById(LABEL_TMP_HP).innerHTML = (lblValue += 1).toString();
-    console.log(lblValue)
-    setCharacterTmpLimb(clickedLimbId, lblValue);
+    setCharacterTmpLimbValue(clickedLimbId, lblValue);
 }
 
 function decreaseLimbHp() {
     let lblValue = getCharacterTmpLimbValue(clickedLimbId);
     getItemById(LABEL_TMP_HP).innerHTML = (lblValue -= 1).toString();
-    console.log(lblValue)
-    setCharacterTmpLimb(clickedLimbId, lblValue);
+    setCharacterTmpLimbValue(clickedLimbId, lblValue);
 }
 
 function getCharacterTmpLimbValue(limb) {
@@ -289,7 +292,7 @@ function getCharacterTmpLimbValue(limb) {
     }
 }
 
-function setCharacterTmpLimb(limb, value) {
+function setCharacterTmpLimbValue(limb, value) {
     switch (limb) {
         case "head":
             return character.tmpHeadValue = value;
@@ -334,9 +337,4 @@ function loadTitles() {
     getItemById(TITLE_PAC).title = "Agility: (" + character.agilityValue + ") + Spirit: (" + character.spiritValue + ") + Targeted Limb: ()";
 
     getItemById(TITLE_ENDURANCE).title = "Spirit: (" + character.spiritValue + ") + Heart: (" + character.heartValue + ") + ( Mind: (" + character.mindValue + "*) + Strength: (" + character.strengthValue + ") + Agility: (" + character.agilityValue + ") ) /2 *Mind is rounded up";
-}
-
-function loadTexts() {
-    getTextAreaById(TEXT_ABILITY).value = character.abilityDescription;
-    getTextAreaById(TEXT_NOTES).value = character.notes;
 }
